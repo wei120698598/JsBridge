@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>bridge demo</title>
+    <!--<style media="screen">-->
+    <!--button{-->
+    <!--width: 140px;-->
+    <!--height: 70px;-->
+    <!--color: #333;-->
+    <!--font-size: 39px;-->
+    <!--font-weight: bold;-->
+    <!--}-->
+    <!--#wrap > div {-->
+    <!--height: 2.5rem;-->
+    <!--background-color: #f9f9f9;-->
+    <!--margin: 10px;-->
+    <!--padding: 0 15px;-->
+    <!--line-height: 2.5rem;-->
+    <!--}-->
+    <!--</style>-->
+</head>
+<body>
+<div id="wrap">
+    <button type="button" name="button" onclick="test()">调用native的test(string)接口</button>
+    <button type="button" name="button" onclick="test1()">调用native的test1(Person)接口</button>
+    <button type="button" name="button" onclick="test2()">调用native的test2(Person)接口</button>
+    <button type="button" name="button" onclick="test3()">调用native的test3(String,person)接口</button>
+    <button type="button" name="button" onclick="test4()">调用native的test4无参接口</button>
+    <br>
+    <button type="button" name="button" onclick="test5()">预览项目</button>
+    <br>
+    <button type="button" name="button" onclick="test6()">上传附件</button>
+    <br>
+    <button type="button" name="button" onclick="previewAttachment()">预览附件</button>
+    <br>
+    <button type="button" name="button" onclick="openContactDetail()">联系人详情</button>
+    <br>
+
+
+    <div id="result"></div>
+</div>
+<script src="file:///android_asset/js_native_bridge.js"></script>
+<script src="file:///android_asset/bridge.js"></script>
+<script type="text/javascript">
+
+
+  function showResult (data, interfaceName) {
+    var result = document.getElementById("result");
+    if (data == null) {
+      result.innerHTML = "正在请求native方法......";
+    } else {
+
+      result.innerHTML = "调用native的" + interfaceName + "方法   native返回结果=" + JSON.stringify(data);
+    }
+  }
+
+  function test10 () {
+    showResult();
+    JsBridge.test({}, function (data) {
+      showResult(data, 'test');
+      if (data.status == 1) {
+        console.log('"test" bridge called success; res:' + JSON.stringify(data));
+      } else {
+        console.log('"test" bridge called faild; res:' + JSON.stringify(data));
+      }
+    });
+  }
+
+  function test () {
+    showResult();
+    icourt.alpha.test({
+      "msg": "js发送的请求"
+    }).then(function (result) {
+      showResult(result, 'test');
+      console.log('"test" bridge called success; res:' + JSON.stringify(result));
+    }).catch(function (error) {
+      showResult(error, 'test');
+      console.log('"test" bridge called faild; res:' + JSON.stringify(error));
+    })
+
+  }
+
+  function test1 () {
+    showResult();
+    icourt.alpha.test1({
+      "age": 10,
+      "name": "wangwu"
+    }).then(function (result) {
+      showResult(result, 'test1');
+      console.log('"test1" bridge called success; res:' + JSON.stringify(result));
+    }).catch(function (error) {
+      showResult(error, 'test1');
+      console.log('"test1" bridge called faild; res:' + JSON.stringify(error));
+    })
+
+  }
+
+  function test2 () {
+    showResult();
+    icourt.alpha.test2({
+      "age": 10,
+      "name": "wangwu"
+    }).then(function (result) {
+      showResult(result, 'test2');
+      console.log('"test" bridge called success; res:' + JSON.stringify(result));
+    }).catch(function (error) {
+      showResult(error, 'test2');
+      console.log('"test" bridge called faild; res:' + JSON.stringify(error));
+    })
+
+  }
+
+  function test3 () {
+    showResult();
+    icourt.alpha.test3({
+      "jiguan": "北京",
+      person: {
+        "age": 10,
+        "name": "wangwu"
+      }
+    }).then(function (result) {
+      showResult(result, 'test3');
+      console.log('"test3" bridge called success; res:' + JSON.stringify(result));
+    }).catch(function (error) {
+      showResult(error, 'test3');
+      console.log('"test3" bridge called faild; res:' + JSON.stringify(error));
+    })
+  }
+
+  function test4 () {
+    showResult();
+    icourt.alpha.test4().then(function (result) {
+      showResult(result, 'test4');
+      console.log('"test4" bridge called success; res:' + JSON.stringify(result));
+    }).catch(function (error) {
+      showResult(error, 'test4');
+      console.log('"test4" bridge called faild; res:' + JSON.stringify(error));
+    })
+
+  }
+
+  function test5 () {
+    showResult();
+    icourt.alpha.preProjectDetail({
+      "projectId": "1985",
+      "projectName": "测试",
+      "isSelectTask": true
+    }).then(function (result) {
+      showResult(result, 'test4');
+      console.log('"test4" bridge called success; res:' + JSON.stringify(result));
+    }).catch(function (error) {
+      showResult(error, 'test4');
+      console.log('"test4" bridge called faild; res:' + JSON.stringify(error));
+    })
+
+  }
+
+  function test6 () {
+    showResult();
+    icourt.alpha.addAttachment({"objectId": "", "objectName": "hahah"}).then(function (result) {
+      showResult(result, 'test6');
+      console.log('"test6" bridge called success; res:' + JSON.stringify(result));
+    }).catch(function (error) {
+      showResult(error, 'test6');
+      console.log('"test6" bridge called faild; res:' + JSON.stringify(error));
+    });
+  }
+
+  function previewAttachment () {
+    showResult();
+    icourt.alpha.previewAttachment({
+      "attachmentId": "",
+      "attachmentPath": "hahah",
+      "attachmentName": "hahah"
+    }).then(function (result) {
+      showResult(result, 'previewAttachment');
+      console.log('"previewAttachment" bridge called success; res:' + JSON.stringify(result));
+    }).catch(function (error) {
+      showResult(error, 'previewAttachment');
+      console.log('"previewAttachment" bridge called faild; res:' + JSON.stringify(error));
+    });
+  }
+
+  function openContactDetail () {
+    showResult();
+    icourt.alpha.openContactDetail({"accId": "", "title": "hahah", "hiddenChatBtn": true}).then(function (result) {
+      showResult(result, 'previewAttachment');
+      console.log('"previewAttachment" bridge called success; res:' + JSON.stringify(result));
+    }).catch(function (error) {
+      showResult(error, 'previewAttachment');
+      console.log('"previewAttachment" bridge called faild; res:' + JSON.stringify(error));
+    });
+  }
+
+</script>
+</body>
+</html>
