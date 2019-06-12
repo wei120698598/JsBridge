@@ -101,7 +101,7 @@
     document.addEventListener(
       'JsBridgeInit',
       function (event) {
-        console.log('------------------bridge');
+        console.log('------------------JS_Bridge------------------');
         window._JSNativeBridge.protocol.scheme = 'icourt';
         window._JSNativeBridge.protocol.host = 'alpha';
         event.bridge.debug = true;

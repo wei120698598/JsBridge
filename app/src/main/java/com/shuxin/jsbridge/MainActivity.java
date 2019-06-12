@@ -44,11 +44,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-
+        initWebView();
     }
 
     private void initWebView() {
-        webView.getSettings().setJavaScriptEnabled(true);
         webView.setWebChromeClient(new BridgeWebViewClient());
         webView.setWebViewClient(new WebViewClient() {
 

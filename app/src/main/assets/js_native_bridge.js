@@ -104,12 +104,12 @@
 
   function _doNativeResponse (response) {
     if (_JSNativeBridge.debug) {
-      console.log(' response=' + JSON.stringify(response));
+      console.log('native message to Json：' + JSON.stringify(response));
     }
     var responseIdValue = response[_JSNativeBridge.response.responseIdName];
     console.log(JSON.stringify(response[_JSNativeBridge.response.responseName]))
     if (responseIdValue) {
-      callbackPromise(response[_JSNativeBridge.response.responseName].success ? 'resolve' : 'reject', responseIdValue, response[_JSNativeBridge.response.responseName].result)
+      callbackPromise(response[_JSNativeBridge.response.responseName].success ? 'resolve' : 'reject', responseIdValue, response[_JSNativeBridge.response.responseName])
       return true;
     }
 
@@ -162,14 +162,13 @@
       if (!_doNativeResponse(message)) {
         _doNativeRequest(message);
       }
-
     });
   }
 
   //暴漏给native的唯一一个通信方法
   function _handleMessageFromNative (messageJSON) {
-    console.log(1)
-    console.log(messageJSON)
+    console.log("----------------------------receiver native message--------------------------------")
+    console.log("native message："+messageJSON)
     _dispatchMessageFromNative(messageJSON);
   }
 
@@ -202,6 +201,6 @@
   readyEvent.bridge = _JSNativeBridge;
   doc.dispatchEvent(readyEvent);
   if (_JSNativeBridge.debug) {
-    console.log("   -- initbridge end");
+    console.log("----------------------------init bridge end--------------------------------");
   }
 })();
